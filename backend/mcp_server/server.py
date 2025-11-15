@@ -1,7 +1,7 @@
 import yaml
 import os
-from app_logic.agent import Agent
-from mcp_server.routes import create_routes
+from backend.app_logic.agent import Agent
+from backend.mcp_server.routes import create_routes
 from mcp.server.fastmcp import FastMCP
 from mcp.server.fastmcp.tools import Tool
 import asyncio

@@ -25,3 +25,7 @@ pytest-asyncio==0.23.6      # Allows async test cases
 
 # --- Linting / Dev (Optional but helpful) ---
 black==24.4.2               # Auto-code formatter
+
+# --- FastAPI Server ---
+fastapi
+uvicorn

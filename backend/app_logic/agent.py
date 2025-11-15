@@ -1,4 +1,4 @@
-from crawler.scraper import Scraper
+from backend.crawler.scraper import Scraper
 from .analyzer import Analyzer
 
 class Agent:
