@@ -1,0 +1,27 @@
+# --- Core Functionality ---
+httpx>=0.27.1,<1             # Async HTTP client for crawling pages
+beautifulsoup4==4.12.2      # HTML parsing + DOM extraction
+lxml==5.2.1                 # Faster HTML parser backend (BS4 will use this automatically)
+pydantic>=2.11.0             # Structured models for MCP outputs
+
+# --- Browser Automation (Optional but Useful) ---
+playwright==1.49.0          # Lets AI agent click buttons, fill forms, execute JS, etc.
+
+# --- AI / Gemini API ---
+google-generativeai==0.7.2  # Gemini API Python SDK (official)
+openai==1.40.1              # Optional: Gemini-compatible API through OpenAI unified SDK
+
+# --- MCP Server ---
+mcp==1.21.1
+
+# --- Config + Utilities ---
+PyYAML==6.0.1               # For config.yaml loading
+rich==13.7.1                # Pretty CLI output for your client (optional but nice)
+typer==0.12.3               # Easy CLI building
+
+# --- Testing ---
+pytest==8.3.1               # Unit tests for scraper/agent/analyzer
+pytest-asyncio==0.23.6      # Allows async test cases
+
+# --- Linting / Dev (Optional but helpful) ---
+black==24.4.2               # Auto-code formatter

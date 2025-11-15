@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Virtual Environments
+venv/
+.venv/
+env/
+
+# Environment variables
+.env
+
+# Test and coverage reports
+.pytest_cache/
+.coverage
+
+# Playwright browser cache
+# This is often stored outside the project directory.
+# If you find it being tracked, you may need to add
+# a machine-specific path to your global gitignore, e.g.:
+# /Users/{username}/Library/Caches/ms-playwright/

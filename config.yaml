@@ -1,0 +1,5 @@
+gemini_api_key: "${GEMINI_API_KEY}"
+crawl_depth: 2
+max_pages: 10
+timeout_seconds: 10
+use_playwright: false
