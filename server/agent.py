@@ -9,14 +9,12 @@ class Agent:
     async def run(self, url):
         pages = await self.scraper.crawl(url)
 
-        scores = []
+        all_page_analyses = []
         for p in pages:
-            scores.append(await self.analyzer.analyze_accessibility(p))
-
-        gemini_feedback = await self.analyzer.analyze_with_gemini(pages)
+            analysis_result = await self.analyzer.run_analysis(p)
+            all_page_analyses.append(analysis_result)
 
         return {
-            "pages_scanned": len(pages),
-            "accessibility": scores,
-            "ux_feedback": gemini_feedback
+            "total_pages_scanned": len(pages),
+            "page_analyses": all_page_analyses,
         }
