@@ -1,8 +1,8 @@
 import yaml
 import os
-# from .agent import Agent
-# from .routes import create_routes
-# from mcp import MCPServer  # Assuming MCP libs installed
+from .agent import Agent
+from .routes import create_routes
+from mcp import MCPServer  
 
 def load_config():
     with open("./config.yaml") as f:
@@ -16,10 +16,10 @@ def load_config():
 
 async def main():
     config = load_config()
- #   agent = Agent(config)
- #   routes = create_routes(agent)
- #   server = MCPServer(routes=routes)
- #   await server.start()
+    agent = Agent(config)
+    routes = create_routes(agent)
+    server = MCPServer(routes=routes)
+    await server.start()
 
 if __name__ == "__main__":
     import asyncio
