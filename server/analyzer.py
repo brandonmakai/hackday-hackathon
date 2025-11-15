@@ -29,4 +29,3 @@ class Analyzer:
         )
 
         return resp.choices[0].message["content"]
-

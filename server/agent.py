@@ -1,4 +1,4 @@
-from .scraper import Scraper
+from scoring.scraper import Scraper
 from .analyzer import Analyzer
 
 class Agent:
@@ -20,4 +20,3 @@ class Agent:
             "accessibility": scores,
             "ux_feedback": gemini_feedback
         }
-

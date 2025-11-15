@@ -1,11 +1,20 @@
 import yaml
 import os
-from .agent import Agent
-from .routes import create_routes
-from mcp import MCPServer  
+from server.agent import Agent
+from mcp_server.routes import create_routes
+from mcp.server.fastmcp import FastMCP
+from mcp.server.fastmcp.tools import Tool
+import asyncio
 
 def load_config():
-    with open("./config.yaml") as f:
+    # Get the directory where the script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Go up one level to the project root
+    project_root = os.path.dirname(script_dir)
+    # Construct the path to config.yaml
+    config_path = os.path.join(project_root, "config.yaml")
+
+    with open(config_path) as f:
         config = yaml.safe_load(f)
 
     # Overide YAML with env variable
@@ -18,10 +27,16 @@ async def main():
     config = load_config()
     agent = Agent(config)
     routes = create_routes(agent)
-    server = MCPServer(routes=routes)
-    await server.start()
+
+    tools = []
+    for name, fn in routes.items():
+        tools.append(Tool.from_function(fn=fn, name=name))
+
+    server = FastMCP(
+        name="mcp_server",
+        tools=tools,
+    )
+    await server.run_stdio_async()
 
 if __name__ == "__main__":
-    import asyncio
     asyncio.run(main())
-
