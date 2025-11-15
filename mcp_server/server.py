@@ -1,6 +1,6 @@
 import yaml
 import os
-from server.agent import Agent
+from app_logic.agent import Agent
 from mcp_server.routes import create_routes
 from mcp.server.fastmcp import FastMCP
 from mcp.server.fastmcp.tools import Tool

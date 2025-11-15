@@ -1,4 +1,4 @@
-from scoring.scraper import Scraper
+from crawler.scraper import Scraper
 from .analyzer import Analyzer
 
 class Agent:
