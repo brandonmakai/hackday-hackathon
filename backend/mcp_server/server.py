@@ -35,6 +35,7 @@ async def main():
     server = FastMCP(
         name="mcp_server",
         tools=tools,
+        port=8001,
     )
     await server.run_sse_async()
 
