@@ -36,7 +36,7 @@ async def main():
         name="mcp_server",
         tools=tools,
     )
-    await server.run_stdio_async()
+    await server.run_sse_async()
 
 if __name__ == "__main__":
     asyncio.run(main())
