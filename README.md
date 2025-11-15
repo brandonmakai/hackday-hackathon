@@ -1,5 +1,4 @@
 # hackday-hackathon
-export GEMINI_API_KEY="AIzaSyCkYUsyAM8_iTEynk3O_YXS0coW6GQiWw0"
 
 # 🤖 AI Beta Tester
 AI-powered beta testing tool that visits your website/app, interacts with it, and produces structured UX, accessibility, and usability feedback.

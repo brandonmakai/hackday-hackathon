@@ -1,4 +1,3 @@
-export GEMINI_API_KEY="AIzaSyCkYUsyAM8_iTEynk3O_YXS0coW6GQiWw0"
 import httpx
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
