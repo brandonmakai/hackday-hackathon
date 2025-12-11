@@ -17,12 +17,14 @@ class Analyzer:
         """Runs a judge prompt and returns the parsed JSON output."""
         prompt = prompt_template.format(**prompt_kwargs)
         resp = self.client.models.generate_content(
-            model="gemini-2.0-pro",
+            model="gemini-2.5-flash",
             contents=prompt,
             config={
                 "response_mime_type": "application/json",
-                "system_instruction": "You are a helpful assistant that only outputs JSON.",
-             
+                "system_instruction": """You are a helpful assistant that only outputs JSON. 
+
+                You MUST output a score between 0 and 100. Be cautious; if information is missing (like contrast data), assign a score near 60 (Passable) rather than a high score.""",
+                "temperature": 0.0,
             },
         )
         content = resp.text
