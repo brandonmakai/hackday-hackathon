@@ -48,6 +48,7 @@ export function AnalysisCard() {
       setIsLoading(false) 
     }
   }
+
   return (
     <Card className="w-full max-w-2xl bg-card border-border shadow-lg">
       <CardHeader className="space-y-2">
