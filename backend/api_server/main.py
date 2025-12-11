@@ -4,7 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 from pydantic import BaseModel
 from contextlib import asynccontextmanager
-import httpx 
 from .config import load_config
 from app_logic.agent import Agent 
 from google.genai.errors import ServerError
@@ -46,7 +45,6 @@ async def global_exception_handler(request: Request, exc: Exception):
     traceback.print_exc()
     print("------------------------------------\n")
     
-    # Return a 500 response to the client
     return JSONResponse(
         status_code=500,
         content={"detail": "Internal Server Error. Check server logs for details."},
@@ -71,20 +69,16 @@ async def analyze_page_endpoint(request: AnalyzeRequest):
         print(f"Succesfully executed agent: {results}")
         return results
     except ServerError as e:
-        # Handle 503 and other Google API Server issues specifically
         print(f"--- Gemini Server Error --- Status: {e.status}")
         print(f"Message: {e.message}")
         
-        # Raise a 503 to the client, explaining the situation
         raise HTTPException(
             status_code=503, 
             detail=f"AI Service Unavailable: {e.message}. Please wait a few moments and try again."
         )
     except Exception as e:
-        # THIS IS THE KEY CHANGE: Print the traceback for *ALL* other errors (LLM, logic, etc.)
         print("\n--- CRITICAL ANALYSIS FAILURE TRACEBACK ---")
         traceback.print_exc()
         print("-------------------------------------------\n")
         
-        # Now raise the HTTP exception for the client
         raise HTTPException(status_code=500, detail=f"Analysis failed: {e}")
