@@ -35,13 +35,9 @@ ai-beta-tester/
 ### 1. Install dependencies
 pip install -r requirements.txt
 
-### 2. Add API Key
-Edit `config.yaml`:
-
-```yaml
-gemini_api_key: "YOUR_KEY"
-crawl_depth: 2
-max_pages: 10
+### 2. Export API Key
+```bash
+export GEMINI_API_KEY="YOUR KEY"
 ```
 
 ### 3. Run FastAPI Backend
