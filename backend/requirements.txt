@@ -1,30 +1,48 @@
-# --- Core Functionality ---
-httpx             # Async HTTP client for crawling pages
-beautifulsoup4==4.12.2      # HTML parsing + DOM extraction
-lxml==5.2.1                 # Faster HTML parser backend (BS4 will use this automatically)
-pydantic>=2.11.0             # Structured models for MCP outputs
+# ==================================
+# --- Core Functionality / Web ---
+# ==================================
+httpx~=0.28.1         # Async HTTP client for crawling pages (Used for httpx.HTTPError)
+beautifulsoup4~=4.12.2 # HTML parsing + DOM extraction
+lxml~=5.2.1            # Faster HTML parser backend (BS4 will use this automatically)
+pydantic~=2.12.4       # Structured models for FastAPI/Pydantic-Settings
+pydantic-settings~=2.12.0 # Required if you use settings files (like settings.py)
+tenacity~=9.1.2        # Required for the Google GenAI SDK's retry mechanism
+python-dotenv~=1.2.1   # Required if you load environment variables from a .env file
 
-# --- Browser Automation (Optional but Useful) ---
-playwright==1.49.0          # Lets AI agent click buttons, fill forms, execute JS, etc.
+# ==================================
+# --- Browser Automation  ---
+# ==================================
+playwright~=1.49.0     # Lets AI agent click buttons, fill forms, execute JS, etc.
 
+# ==================================
 # --- AI / Gemini API ---
-google-genai==1.54.0
-openai==1.40.1              # Optional: Gemini-compatible API through OpenAI unified SDK
+# ==================================
+google-genai~=1.54.0   # Core library for the new Gemini Python SDK
+google-generativeai~=0.7.2 
+google-api-core~=2.28.1
 
+# ==================================
+# --- FastAPI Server / ASGI ---
+# ==================================
+fastapi~=0.121.2       # Core web framework
+uvicorn~=0.38.0        # ASGI server to run FastAPI
+starlette~=0.49.3      # FastAPI's underlying toolkit
+python-multipart~=0.0.20 # Required if your app handles form data (good to keep)
+
+# ==================================
 # --- Config + Utilities ---
-PyYAML==6.0.1               # For config.yaml loading
-rich==13.7.1                # Pretty CLI output for your client (optional but nice)
-typer==0.12.3               # Easy CLI building
+# ==================================
+PyYAML~=6.0.1          # For config.yaml loading
+rich~=13.7.1           # Pretty CLI output for your client (optional but nice)
+typer~=0.12.3          # Easy CLI building
 
+# ==================================
 # --- Testing ---
-pytest==8.3.1               # Unit tests for scraper/agent/analyzer
-pytest-asyncio==0.23.6      # Allows async test cases
+# ==================================
+pytest~=8.3.1          # Unit tests for scraper/agent/analyzer
+pytest-asyncio~=0.23.6 # Allows async test cases
 
-# --- Linting / Dev (Optional but helpful) ---
-black==24.4.2               # Auto-code formatter
-
-# --- FastAPI Server ---
-fastapi
-uvicorn
-starlette
-
+# ==================================
+# --- Linting / Dev  ---
+# ==================================
+black~=24.4.2          # Auto-code formatter
