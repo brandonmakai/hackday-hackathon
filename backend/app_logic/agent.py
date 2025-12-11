@@ -1,17 +1,17 @@
-from backend.crawler.scraper import Scraper
+from crawler.scraper import Scraper
 from .analyzer import Analyzer
 
 class Agent:
     def __init__(self, config):
         self.scraper = Scraper(max_pages=config.get("max_pages", 10))
-        self.analyzer = Analyzer(api_key=config["gemini_api_key"])
+        self.analyzer = Analyzer()
 
     async def run(self, url):
         pages = await self.scraper.crawl(url)
 
         all_page_analyses = []
         for p in pages:
-            analysis_result = await self.analyzer.run_analysis(p)
+            analysis_result = self.analyzer.run_analysis(p)
             all_page_analyses.append(analysis_result)
 
         return {
