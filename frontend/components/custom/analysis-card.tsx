@@ -1,22 +1,29 @@
 "use client"
 
 import type React from "react"
-import AnalyzeRequest from "@/types/analyzer-request"
+import type AnalyzeRequest from "@/types/analyzer-request"
+import type AnalyzerResponse from "@/types/analyzer-response"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 
+const initialReportState: AnalyzerResponse = {
+  total_pages_scanned: 0,
+  page_analyses: [],
+}
+
 export function AnalysisCard() {
   const [inputUrl, setInputUrl] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [report, setReport] = useState<AnalyzerResponse>(initialReportState)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!inputUrl.trim()) return
     setIsLoading(true) 
-
+    
     const request: AnalyzeRequest = {
       url: inputUrl
     }
@@ -32,16 +39,13 @@ export function AnalysisCard() {
         throw new Error(`Network response was not ok: ${response.statusText}`)
       }
 
-      const report = await response.json()
+      setReport(await response.json())
       console.log(report)
-      // Update state with report here (e.g., setReport(report))
 
     } catch (error) {
       console.error('There was a problem with the fetch operation', error)
-      // Set error state for user feedback
     } finally {
-      // This runs after try or catch completes
-      setIsLoading(false) // Stop loading
+      setIsLoading(false) 
     }
   }
   return (
