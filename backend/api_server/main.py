@@ -8,6 +8,14 @@ from mcp.client.sse import sse_client
 from mcp.shared.message import SessionMessage
 from mcp.types import CallToolRequest, CallToolRequestParams
 
+"""
+def create_routes(agent):
+    return {
+        "crawl_site": lambda url: agent.scraper.crawl(url),
+        "analyze_site": lambda url: agent.run(url),
+    }
+"""
+
 # Global variables to hold the MCP client streams
 mcp_read_stream = None
 mcp_write_stream = None
