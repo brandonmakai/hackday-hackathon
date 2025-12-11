@@ -1,5 +1,5 @@
-import os
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from contextlib import asynccontextmanager
 import httpx 
@@ -22,6 +22,18 @@ app = FastAPI(
     description="API for page analysis.",
     version="0.1.0",
     lifespan=lifespan,
+)
+
+origins = [
+    "https://localhost:3000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.get("/health", summary="Health check endpoint")
