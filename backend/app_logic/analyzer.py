@@ -1,28 +1,41 @@
-import re
 import json
-from openai import OpenAI
+from google import genai
 from .inspector import PageInspector
 from . import prompts
 
 class Analyzer:
-    def __init__(self, api_key):
-        self.client = OpenAI(api_key=api_key)
+    """
+    Synchronously runs Gemini API calls to perform an analysis 
+    on a specified URL's content
 
-    async def _run_judge(self, prompt_template: str, prompt_kwargs: dict) -> dict:
+    note: consider asnyc request if requirements change
+    """
+    def __init__(self):
+        self.client = genai.Client() # api key automatically picked up
+
+    def _run_judge(self, prompt_template: str, prompt_kwargs: dict) -> dict:
         """Runs a judge prompt and returns the parsed JSON output."""
         prompt = prompt_template.format(**prompt_kwargs)
-        resp = self.client.chat.completions.create(
+        resp = self.client.models.generate_content(
             model="gemini-2.0-pro",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant that only outputs JSON."},
-                {"role": "user", "content": prompt}
-            ],
-            response_format={"type": "json_object"},
+            contents=prompt,
+            config={
+                "response_mime_type": "application/json",
+                "system_instruction": "You are a helpful assistant that only outputs JSON.",
+             
+            },
         )
-        content = resp.choices[0].message.content
-        return json.loads(content)
+        content = resp.text
+        if content is None:
+            raise ValueError("Gemini returned no text output")
+        
+        try:
+            return json.loads(content)
+        except Exception as e:
+            print("Error parsing model output:", e)
+            return {"error": "Invalid model output"}
 
-    async def run_analysis(self, page: dict) -> dict:
+    def run_analysis(self, page: dict) -> dict:
         """
         Orchestrates the multi-agent analysis of a single page.
         """
@@ -31,21 +44,21 @@ class Analyzer:
         inspector_results_str = json.dumps(inspector_results, indent=2)
 
         # Run the judges
-        accessibility_report = await self._run_judge(
+        accessibility_report = self._run_judge(
             prompts.ACCESSIBILITY_JUDGE_PROMPT,
             {"inspector_results": inspector_results_str, "page_text": page["text"]},
         )
-        ux_design_report = await self._run_judge(
+        ux_design_report = self._run_judge(
             prompts.UX_DESIGN_JUDGE_PROMPT,
             {"page_text": page["text"]},
         )
-        content_seo_report = await self._run_judge(
+        content_seo_report = self._run_judge(
             prompts.CONTENT_SEO_JUDGE_PROMPT,
             {"inspector_results": inspector_results_str, "page_text": page["text"]},
         )
 
         # Run the aggregator
-        final_report = await self._run_judge(
+        final_report = self._run_judge(
             prompts.AGGREGATOR_RECOMMENDER_PROMPT,
             {
                 "accessibility_report": json.dumps(accessibility_report),
