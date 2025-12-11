@@ -6,7 +6,6 @@ AI-powered beta testing tool that visits your website/app, interacts with it, an
 Built with:
 - Python
 - Gemini API
-- MCP (Model Context Protocol)
 
 ---
 
@@ -24,9 +23,8 @@ Founders often lack beta testers early on. This tool automatically:
 
 
 ai-beta-tester/
- mcp_server/ -> Main MCP server logic
- client/ -> CLI client for sending commands
- tests/ -> Unit tests
+ api_server/ -> Main FastAPI server logic
+ app_logic/ -> Various Agents + tools to collect data and perform analysis
  config.yaml -> API keys + settings
 
 ---
@@ -34,7 +32,6 @@ ai-beta-tester/
 ## 🛠️ Setup
 
 ### 1. Install dependencies
-
 pip install -r requirements.txt
 
 ### 2. Add API Key
@@ -44,99 +41,48 @@ Edit `config.yaml`:
 gemini_api_key: "YOUR_KEY"
 crawl_depth: 2
 max_pages: 10
+```
 
-3. Run MCP Server
-python -m mcp_server.server
+### 3. Run FastAPI Backend
+```bash
+cd backend && uvicorn api_server.main:app --reload
+```
 
-4. Run Client (Testing)
-python -m client.cli https://example.com
+### 4. Run Client
+```bash
+cd ../frontend && npm start
+```
 
+## 🚀 Features
+1. Website Auto-Crawling
+2. Visits and extracts DOM from pages
+3. Accessibility Analysis
+4. Checks contrast, alt tags, ARIA roles
+5. UI/UX Analysis
+6. Uses Gemini to evaluate heuristics
+7. Summary Report
+8. Prioritized list of issues
+9. Gives advice on effective solutions
+10. Exposes endpoints/tooling for external clients
 
-🚀 Features
-Feature
-Description
-Website Auto-Crawling
-Visits and extracts DOM from pages
-Accessibility Analysis
-Checks contrast, alt tags, ARIA roles
-UI/UX Analysis
-Uses Gemini to evaluate heuristics
-Summary Report
-Prioritized list of issues
-MCP Server
-Exposes endpoints/tooling for external agents
-
-
-📡 MCP Commands
-The MCP server exposes:
-Command
-Description
-crawl_site(url)
-Crawl and extract UX-relevant data
-analyze_site(data)
-Run Gemini-based analysis
-summarize()
-Produce final user-facing summary
-
-
-🧠 Architecture
+## 🧠 Architecture
 Crawling → Data Extract → Gemini Evaluations → Prioritized Summary
 
-Modules:
-scraper.py handles link extraction + DOM capture
-
-
-analyzer.py runs WCAG/heuristic scoring
-
-
-agent.py orchestrates crawling + analysis
-
-
-routes.py exposes MCP commands
-
-
-
-📌 Example CLI Usage
-python -m client.cli https://your-startup-site.com
-
-Output example:
-Accessibility Score: 72/100
-Top Issues:
-1. Missing alt text on hero image
-2. Low contrast on navbar
-3. Button labels unclear on mobile
-
-
-🧪 Testing
-pytest tests/
-
-
-🏆 Ideal Hackathon Extensions
-Screenshot-based visual UX scoring
-
-
-"Replay user journey" mode
-
-
-Performance analysis (Core Web Vitals clone)
-
-
-Multi-agent: crawler agent + analysis agent
-
-
-
-
----
-
-# 📦 **requirements.txt**
-
-```txt
-httpx
-beautifulsoup4
-pydantic
-pyyaml
-pytest
-playwright
-openai            # Gemini-compatible SDK for hackathons
-
-(Replace with google-generativeai if using Google's official SDK.)
+### Backend Output example:
+```json
+ "ux_design": {
+                    "reasoning": {
+                        "Navigation & Flow": "The page offers only one actionable element: a 'Learn more' link. There is no complex navigation structure, menus, or breadcrumbs. Understanding 'where you are' is trivial as it appears to be a standalone page. The flow is linear and extremely simple, which is functional but does not showcase robust navigation design or the ability to navigate to other parts of a site.",
+                        "Overall Aesthetics": "With only the text content provided, it is impossible to evaluate the visual appeal, modernity, color palette, use of imagery, spacing, or other aesthetic elements of the design. The page is likely extremely minimalist, which can be a design choice, but without any visual context, it cannot be judged as appealing or modern. A neutral, passable score is given due to the complete lack of visual information.",
+                        "Readability": "The text content itself uses clear and simple English. However, without information regarding font choices (family, size, weight), line spacing, letter spacing, or color contrast against a background, a comprehensive assessment of readability is not possible. Assuming default browser styles, the text is likely legible, but optimal typographic choices and contrast cannot be confirmed. Therefore, a cautious, passable score is assigned due to missing visual data.",
+                        "Visual Hierarchy & Layout": "The page content is extremely minimal, consisting of a title and a short paragraph with a link. Assuming standard browser rendering, the layout is likely very simple and clean, possibly centered. While this simplicity avoids clutter, there isn't enough content or complexity to demonstrate sophisticated visual hierarchy or layout design that effectively guides user attention beyond basic reading flow."
+                    },
+                    "scores": {
+                        "Navigation & Flow": 60,
+                        "Overall Aesthetics": 60,
+                        "Readability": 60,
+                        "Visual Hierarchy & Layout": 65
+                    }
+                }
+            
+```
