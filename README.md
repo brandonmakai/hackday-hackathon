@@ -4,7 +4,8 @@
 AI-powered beta testing tool that visits your website/app, interacts with it, and produces structured UX, accessibility, and usability feedback.
 
 Built with:
-- Python
+- Python (FastAPI)
+- JavaScript (React)
 - Gemini API
 
 ---
