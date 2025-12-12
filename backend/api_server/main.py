@@ -1,12 +1,15 @@
 import traceback
+import os
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 from pydantic import BaseModel
 from contextlib import asynccontextmanager
+from google.genai.errors import ServerError
+
+from utilities.dev_mock_data import MOCK_ANALYZER_RESPONSE
 from .config import load_config
 from app_logic.agent import Agent 
-from google.genai.errors import ServerError
 
 agent_instance: Agent | None = None
 
@@ -59,6 +62,9 @@ class AnalyzeRequest(BaseModel):
 
 @app.post("/analyze-page", summary="Performs full page analysis")
 async def analyze_page_endpoint(request: AnalyzeRequest):
+    if os.environ.get("APP_ENV") == "development":
+        return MOCK_ANALYZER_RESPONSE
+
     global agent_instance
     
     if not agent_instance or not agent_instance.analyzer.client:

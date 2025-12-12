@@ -1,7 +1,7 @@
 import json
 from google import genai
 from .inspector import PageInspector
-from . import prompts
+from ..utilities import prompts
 
 class Analyzer:
     """
