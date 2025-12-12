@@ -1,4 +1,4 @@
-interface Scores {
+export default interface Scores {
   [key: string]: number; // Used for dynamic keys like 'Perceivable', 'Operable', etc.
 }
 

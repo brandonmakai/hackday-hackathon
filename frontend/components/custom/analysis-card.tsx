@@ -2,22 +2,24 @@
 
 import type React from "react"
 import type AnalyzeRequest from "@/types/analyzer-request"
-import type AnalyzerResponse from "@/types/analyzer-response"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
+import AnalyzerResponse from "@/types/analyzer-response"
 
-const initialReportState: AnalyzerResponse = {
-  total_pages_scanned: 0,
-  page_analyses: [],
+interface AnalysisCardProps {
+  onButtonClick: (report: AnalyzerResponse) => void
 }
 
-export function AnalysisCard() {
+export function AnalysisCard({ onButtonClick }: AnalysisCardProps) {
   const [inputUrl, setInputUrl] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const [report, setReport] = useState<AnalyzerResponse>(initialReportState)
+  
+  const handleClick = (report: AnalyzerResponse) => {
+    onButtonClick(report)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -38,9 +40,7 @@ export function AnalysisCard() {
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`)
       }
-
-      setReport(await response.json())
-      console.log(report)
+      handleClick(await response.json())
 
     } catch (error) {
       console.error('There was a problem with the fetch operation', error)
