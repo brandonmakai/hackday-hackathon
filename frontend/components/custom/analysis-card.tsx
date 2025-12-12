@@ -13,10 +13,18 @@ interface AnalysisCardProps {
   onButtonClick: (report: AnalyzerResponse) => void
 }
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL
+const ANALYZE_PAGE_ENDPOINT = process.env.NEXT_PUBLIC_ANALYZE_PAGE_ENDPOINT
+
 export function AnalysisCard({ onButtonClick }: AnalysisCardProps) {
   const [inputUrl, setInputUrl] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+
   
+  if (!API_URL || !ANALYZE_PAGE_ENDPOINT) {
+    throw new Error("NEXT_PUBLIC_API_URL is not defiend in the environment.")
+  }
+ 
   const handleClick = (report: AnalyzerResponse) => {
     onButtonClick(report)
   }
@@ -31,7 +39,7 @@ export function AnalysisCard({ onButtonClick }: AnalysisCardProps) {
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/analyze-page', {
+      const response = await fetch(`${API_URL}/${ANALYZE_PAGE_ENDPOINT}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(request),
@@ -74,7 +82,6 @@ export function AnalysisCard({ onButtonClick }: AnalysisCardProps) {
           </div>
           <Button
             type="submit"
-            onClick={handleSubmit}
             disabled={isLoading || !inputUrl.trim()}
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
           >

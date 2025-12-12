@@ -1,5 +1,7 @@
 "use client"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ArrowLeft } from "lucide-react"
+import { Button } from "../ui/button"
 
 interface AnalysisSummaryProps {
   overall_score: number
@@ -7,6 +9,7 @@ interface AnalysisSummaryProps {
   Operable: number
   Understandable: number
   Robust: number
+  onButtonClick: () => void
 }
 
 function getScoreColor(score: number): string {
@@ -76,11 +79,23 @@ export function AnalysisSummaryCard({
   Operable,
   Understandable,
   Robust,
+  onButtonClick,
 }: AnalysisSummaryProps) {
+  
+  const handleClick = () => {
+    onButtonClick()
+  }
+
   return (
     <Card className="w-full bg-card border-border shadow-lg">
-      <CardHeader>
-        <CardTitle className="text-2xl">Analysis Summary</CardTitle>
+      <CardHeader className="flex flex-row items-center justify-between">
+          <CardAction>
+            <Button variant="outline" size="icon-lg" 
+              aria-label="Back" onClick={handleClick}> 
+              <ArrowLeft size={64} /> 
+            </Button>
+          </CardAction>
+          <CardTitle className="text-xl absolute left-1/2 -translate-x-1/2">Analysis Summary</CardTitle>
       </CardHeader>
       <CardContent className="space-y-8">
         {/* Overall Score with Circular Progress */}
