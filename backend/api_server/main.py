@@ -6,11 +6,13 @@ from starlette.responses import JSONResponse
 from pydantic import BaseModel
 from contextlib import asynccontextmanager
 from google.genai.errors import ServerError
+import dotenv
 
-from utilities.dev_mock_data import MOCK_ANALYZER_RESPONSE
+from backend.utilities.dev_mock_data import MOCK_ANALYZER_RESPONSE
+from backend.app_logic.agent import Agent 
 from .config import load_config
-from app_logic.agent import Agent 
 
+dotenv.load_dotenv()
 agent_instance: Agent | None = None
 
 @asynccontextmanager
