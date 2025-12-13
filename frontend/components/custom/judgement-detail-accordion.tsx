@@ -53,7 +53,11 @@ function CategorySection({ details }: CategorySelectionProps) {
   return (
     <div className="space-y-2">
       {keys.map((key: string) => (
-        <SubSectionItem name={key} score={details.scores[key]} reasoning={details.reasoning[key]} />
+        <SubSectionItem 
+          key={key} 
+          name={key} 
+          score={details.scores[key]} 
+          reasoning={details.reasoning[key]} />
       ))}
     </div>
   )

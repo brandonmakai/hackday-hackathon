@@ -40,7 +40,7 @@ export function AnalysisContainer() {
   return (
     <>
       {overallScore && accessabilityScores ? (
-        <div key={cardKey} className={animationClasses}>    
+        <div key={cardKey} className={`{animationClasses} flex flex-col gap-4`}>    
           <AnalysisSummaryCard 
             overall_score={overallScore}
             Perceivable={accessabilityScores['Perceivable']}
