@@ -67,7 +67,6 @@ function CategoryBadge({
 interface FixedProps {
   title: string
   overallScore: number
-  onButtonClick: () => void
 }
 
 type DynamicScoreProps = Record<string, number>
@@ -75,26 +74,14 @@ type DynamicScoreProps = Record<string, number>
 type AnalysisSummaryCardProps = FixedProps & DynamicScoreProps
 
 export function AnalysisSummaryCard(props: AnalysisSummaryCardProps) {
-  const { title, overallScore, onButtonClick, ...dynamicScores } = props
-
-  const handleClick = () => {
-    onButtonClick()
-  }
+  const { title, overallScore, ...dynamicScores } = props
 
   return (
     <Card className="w-full bg-card border-border shadow-lg">
       <CardHeader className="flex flex-row items-center justify-between">
-          <CardAction>
-            <Button variant="outline" size="icon-lg" 
-              aria-label="Back" onClick={handleClick}> 
-              <ArrowLeft size={64} /> 
-            </Button>
-          </CardAction>
-          <CardTitle className="text-xl flex-grow flex justify-center">
-          {title} Analysis Summary
-          </CardTitle>
-          {/* Spacer on the right for symmetry (same width as action button)*/}
-          <div className="w-[44px]"></div>
+        <CardTitle className="text-xl text-center flex-grow flex justify-center">
+          {title} Summary
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-8">
         {/* Overall Score with Circular Progress */}
