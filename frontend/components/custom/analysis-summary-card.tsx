@@ -3,15 +3,6 @@ import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/componen
 import { ArrowLeft } from "lucide-react"
 import { Button } from "../ui/button"
 
-interface AnalysisSummaryProps {
-  overall_score: number
-  Perceivable: number
-  Operable: number
-  Understandable: number
-  Robust: number
-  onButtonClick: () => void
-}
-
 function getScoreColor(score: number): string {
   if (score > 70) return "bg-green-500/20 text-green-700 border-green-300"
   if (score >= 50) return "bg-yellow-500/20 text-yellow-700 border-yellow-300"
@@ -73,15 +64,19 @@ function CategoryBadge({
   )
 }
 
-export function AnalysisSummaryCard({
-  overall_score,
-  Perceivable,
-  Operable,
-  Understandable,
-  Robust,
-  onButtonClick,
-}: AnalysisSummaryProps) {
-  
+interface FixedProps {
+  title: string
+  overallScore: number
+  onButtonClick: () => void
+}
+
+type DynamicScoreProps = Record<string, number>
+
+type AnalysisSummaryCardProps = FixedProps & DynamicScoreProps
+
+export function AnalysisSummaryCard(props: AnalysisSummaryCardProps) {
+  const { title, overallScore, onButtonClick, ...dynamicScores } = props
+
   const handleClick = () => {
     onButtonClick()
   }
@@ -96,7 +91,7 @@ export function AnalysisSummaryCard({
             </Button>
           </CardAction>
           <CardTitle className="text-xl flex-grow flex justify-center">
-            Analysis Summary
+          {title} Analysis Summary
           </CardTitle>
           {/* Spacer on the right for symmetry (same width as action button)*/}
           <div className="w-[44px]"></div>
@@ -104,15 +99,14 @@ export function AnalysisSummaryCard({
       <CardContent className="space-y-8">
         {/* Overall Score with Circular Progress */}
         <div className="flex justify-center">
-          <CircularProgressBar score={overall_score} />
+          <CircularProgressBar score={overallScore} />
         </div>
 
         {/* WCAG Category Scores Grid */}
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          <CategoryBadge label="Perceivable" score={Perceivable} />
-          <CategoryBadge label="Operable" score={Operable} />
-          <CategoryBadge label="Understandable" score={Understandable} />
-          <CategoryBadge label="Robust" score={Robust} />
+          {Object.entries(dynamicScores).map(([scoreName, scoreValue]) => (
+            <CategoryBadge key={scoreName} label={scoreName} score={scoreValue} />
+          ))}
         </div>
 
         {/* Score Legend */}
