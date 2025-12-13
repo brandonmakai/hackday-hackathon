@@ -5,7 +5,7 @@ import type Scores from "@/types/judgement"
 
 import { AnalysisCard } from "@/components/custom/analysis-card"
 import { AnalysisSummaryCard } from "@/components/custom/analysis-summary-card"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 export const initialReportState: AnalyzerResponse = {
   total_pages_scanned: 0,
@@ -14,14 +14,19 @@ export const initialReportState: AnalyzerResponse = {
 
 export function AnalysisContainer() {
   const [report, setReport] = useState<AnalyzerResponse>(initialReportState)
-  const [hasMounted, setHasMounted] = useState(false)
+  const [allowTransition, setAllowTransition] = useState(false) 
   
-  const updateReport = (newReport: AnalyzerResponse) => {
+  console.log("allowTransition:", allowTransition)
+
+  const handleButtonClick = (newReport: AnalyzerResponse) => {
     setReport(newReport)
+    setAllowTransition(true)
   }
+
   const resetReport = () => {
     setReport(initialReportState)
   }
+
 
   let accessabilityScores: Scores | undefined = undefined
   let overallScore: number | undefined = undefined 
@@ -31,7 +36,7 @@ export function AnalysisContainer() {
   }
   
   const cardKey = overallScore && accessabilityScores ? 'summary' : 'analysis'
-  const animationClasses = "animate-in fade-in slide-in-from-top-4 duration-500"
+  const animationClasses = allowTransition ? "animate-in fade-in slide-in-from-top-4 duration-500" : ""
 
   return (
     <>
@@ -48,7 +53,7 @@ export function AnalysisContainer() {
         </div>
         ) : ( 
         <div key={cardKey} className={animationClasses}>
-          <AnalysisCard onButtonClick={updateReport}/>
+          <AnalysisCard onButtonClick={handleButtonClick}/>
         </div>
       )}
     </>

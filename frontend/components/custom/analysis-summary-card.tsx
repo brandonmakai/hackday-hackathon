@@ -95,7 +95,11 @@ export function AnalysisSummaryCard({
               <ArrowLeft size={64} /> 
             </Button>
           </CardAction>
-          <CardTitle className="text-xl absolute left-1/2 -translate-x-1/2">Analysis Summary</CardTitle>
+          <CardTitle className="text-xl flex-grow flex justify-center">
+            Analysis Summary
+          </CardTitle>
+          {/* Spacer on the right for symmetry (same width as action button)*/}
+          <div className="w-[44px]"></div>
       </CardHeader>
       <CardContent className="space-y-8">
         {/* Overall Score with Circular Progress */}
