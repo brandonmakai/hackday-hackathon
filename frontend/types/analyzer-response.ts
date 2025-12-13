@@ -1,3 +1,5 @@
+import type { Judgments } from "./judgement";
+
 interface PageAnalysis {
   overall_score: number;
   summary: string;

@@ -1,10 +1,11 @@
 "use client"
 
 import type AnalyzerResponse from "@/types/analyzer-response"
-import type Scores from "@/types/judgement"
+import type { Scores } from "@/types/judgement"
 
 import { AnalysisCard } from "@/components/custom/analysis-card"
 import { AnalysisSummaryCard } from "@/components/custom/analysis-summary-card"
+import { JudgementDetailAccordion } from "./judgement-detail-accordion"
 import { useState } from "react"
 
 export const initialReportState: AnalyzerResponse = {
@@ -16,8 +17,6 @@ export function AnalysisContainer() {
   const [report, setReport] = useState<AnalyzerResponse>(initialReportState)
   const [allowTransition, setAllowTransition] = useState(false) 
   
-  console.log("allowTransition:", allowTransition)
-
   const handleButtonClick = (newReport: AnalyzerResponse) => {
     setReport(newReport)
     setAllowTransition(true)
@@ -50,6 +49,7 @@ export function AnalysisContainer() {
             Robust={accessabilityScores['Robust']}
             onButtonClick={resetReport}
           />
+          <JudgementDetailAccordion judgments={report.page_analyses[0].judgements} />
         </div>
         ) : ( 
         <div key={cardKey} className={animationClasses}>
