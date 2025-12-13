@@ -1,12 +1,10 @@
 "use client"
 
 import type AnalyzerResponse from "@/types/analyzer-response"
-import type { Judgments, Scores } from "@/types/judgement"
+import type { Judgments} from "@/types/judgement"
 
 import { AnalysisCard } from "@/components/custom/analysis-card"
-import { AnalysisSummaryCard } from "@/components/custom/analysis-summary-card"
 import { JudgementDetailAccordion } from "./judgement-detail-accordion"
-import { convertSnakeCase } from "@/utilities/utils"
 import { useState } from "react"
 import { AnalysisSummaryCarousel } from "./analysis-summary-carousel"
 
