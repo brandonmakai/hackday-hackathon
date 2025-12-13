@@ -4,9 +4,9 @@ import type AnalyzerResponse from "@/types/analyzer-response"
 import type { Judgments} from "@/types/judgement"
 
 import { AnalysisCard } from "@/components/custom/analysis-card"
-import { JudgementDetailAccordion } from "./judgement-detail-accordion"
+import { JudgementDetailAccordion } from "@/components/custom/judgement-detail-accordion"
+import { AnalysisSummaryCarousel } from "@/components/custom/analysis-summary-carousel"
 import { useState } from "react"
-import { AnalysisSummaryCarousel } from "./analysis-summary-carousel"
 
 export const initialReportState: AnalyzerResponse = {
   total_pages_scanned: 0,

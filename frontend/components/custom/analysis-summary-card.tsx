@@ -1,7 +1,6 @@
 "use client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft } from "lucide-react"
-import { Button } from "../ui/button"
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 function getScoreColor(score: number): string {
   if (score > 70) return "bg-green-500/20 text-green-700 border-green-300"

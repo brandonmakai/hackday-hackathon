@@ -1,13 +1,12 @@
 "use client"
 
-import type React from "react"
 import type AnalyzeRequest from "@/types/analyzer-request"
+import type AnalyzerResponse from "@/types/analyzer-response"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
-import AnalyzerResponse from "@/types/analyzer-response"
 
 interface AnalysisCardProps {
   onButtonClick: (report: AnalyzerResponse) => void
